@@ -1,0 +1,77 @@
+{% extends 'vitrek/layout.html' %}
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid" style="display:flow-root;">
+        <button class="btn btn-secondary" id="sidebarToggle">Toggle Menu</button>
+        <button class="btn btn-secondary" id="newDevice">New measure</button>
+    </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="customer">Customer</span>
+            </div>
+            <input type="text" class="form-control" id="customerName" value="{{ customer }}">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Device type and number </span>
+            </div>
+            <input type="text" class="form-control" id="deviceType" value="{{ type }}">
+            <input type="text" class="form-control" id="deviceNumber" value="{{ number }}">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="submitCustomer">Submit</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" >Measure point</span>
+            </div>
+            <input type="text" class="form-control" id="measurePoint">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="freq">Current type</span>
+            </div>
+            <select class="custom-select" id="currentType">
+                <option selected value="переменный">переменный 50 Гц</option>
+                <option value="переменный 0,1 Гц">переменный 0.1 Гц</option>
+                <option value="постоянный">постоянный</option>
+            </select>
+        </div>
+    </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid" style="display:flow-root;">
+
+        <button class="btn btn-primary" id="getData">Get Data</button>
+        <button class="btn btn-primary" id="saveData">Save Data</button>
+    </div>
+</nav>
+
+<div id="container">
+    <table id="data" class="table">
+        <tr>
+            {% for col in header %}
+            <th>
+                {{ col }}
+            </th>
+            {% endfor %}
+        </tr>
+
+    {% for row in data %}
+        <tr>
+        {% for col in row %}
+            <td>
+                {{ col }}
+            </td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

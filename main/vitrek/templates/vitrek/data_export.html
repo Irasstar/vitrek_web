@@ -1,0 +1,61 @@
+{% extends 'vitrek/layout.html' %}
+
+{% block content %}
+<!--<div class="container-fluid">-->
+<!--<div class="input-group mb-3">-->
+<!--  <input type="file" class="form-control" id="folder" webkitdirectory directory single>-->
+<!--  <label class="input-group-text" for="folder" >Upload</label>-->
+<!--</div>-->
+<!--</div>-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid" style="display:flow-root;">
+        <button class="btn btn-secondary" id="sidebarToggle">Toggle Menu</button>
+        <button class="btn btn-primary" id="download">Download report</button>
+        <button class="btn btn-primary" id="saveOnServer">Save report on server</button>
+    </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+  <div class="container-fluid" style="display:flow-root;">
+    <h4>заказчик: {{ customer.name }}; прибор: {{ customer.type }} №{{ customer.number }}</h4>
+  </div>
+</nav>
+
+
+{% for measure in measures %}
+  <div class="container">
+    <p class="h4">точка: {{ measure.measure_point }} кВ; род тока: {{ measure.current_type }}</p>
+
+      <table id="data" class="table">
+          <tr>
+              {% for col in header %}
+              <th>
+                  {{ col }}
+              </th>
+              {% endfor %}
+          </tr>
+
+      {% for row in measure.measures.data %}
+          <tr>
+              <td>
+                  {{row.ACV}}
+              </td>
+              <td>
+                  {{row.FR}}
+              </td>
+              <td>
+                  {{row.DCV}}
+              </td>
+              <td>
+                  {{row.PKPK}}
+              </td>
+              <td>
+                  {{row.CF}}
+              </td>
+          </tr>
+      {% endfor %}
+      </table>
+  </div>
+{% endfor %}
+
+{% endblock %}
