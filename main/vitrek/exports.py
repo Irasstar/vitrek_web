@@ -43,14 +43,17 @@ class ExportData:
                     ws.cell(row, col).value = data['DCV']
                 elif point.current_type == 'переменный 0,1 Гц':
                     ws.cell(row, col).value = data['ACV']
-        f_name = cls.gen_file_name()
-        f_path = MeasuresSetting.get_file_path()
-        path = MeasuresSetting.get_file_path()
-        wb.save(os.path.join(path, f_name))
+        wb.save(cls.get_file_address())
 
     @classmethod
     def gen_file_name(cls):
         customer = Customer.get_customer()
         return f'{customer.name} {customer.type} №{customer.number}.xlsm'
+
+    @classmethod
+    def get_file_address(cls):
+        path = MeasuresSetting.get_file_path()
+        f_name = cls.gen_file_name()
+        return os.path.join(path, f_name)
 
 
