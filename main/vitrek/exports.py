@@ -24,7 +24,7 @@ class ExportData:
         customer = Customer.get_customer()
         points = MeasurePoint.get_measures_data()
 
-        wb = openpyxl.open(cls.template_filename)
+        wb = openpyxl.open(cls.template_filename, keep_vba=True, read_only=False)
         ws = wb[cls.ps_name]
         ws[cls.dev_type_addr] = customer.type
         ws[cls.dev_num_addr] = customer.number
@@ -37,7 +37,12 @@ class ExportData:
 
              # insert measures
             for row, data in enumerate(point.measures['data'], start=cls.meas_start_row):
-                ws.cell(row, col).value = data['ACV']
+                if point.current_type == 'переменный':
+                    ws.cell(row, col).value = data['ACV']
+                elif point.current_type == 'постоянный':
+                    ws.cell(row, col).value = data['DCV']
+                elif point.current_type == 'переменный 0,1 Гц':
+                    ws.cell(row, col).value = data['ACV']
         f_name = cls.gen_file_name()
         f_path = MeasuresSetting.get_file_path()
         path = MeasuresSetting.get_file_path()
