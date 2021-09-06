@@ -9,4 +9,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.measures, name='measures'),
     path('export/', views.exports, name='export'),
+    path('export/download_report', views.send_file, name='download'),
 ]
